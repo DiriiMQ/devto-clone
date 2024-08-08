@@ -3,11 +3,10 @@
 import Link from "next/link";
 import Head from 'next/head'
 import Image from 'next/image'
-import { useState } from 'react'
+
+import SearchBar from "./_components/searchBar";
 
 export default function Home() {
-  const [searchQuery, setSearchQuery] = useState('')
-
   const sidebarItems = [
     { icon: '🏠', text: 'Home' },
     { icon: '🎙️', text: 'Podcasts' },
@@ -37,45 +36,14 @@ export default function Home() {
   ] // for sample
 
   return (
-    <div className="flex min-h-screen bg-gray-100">
+    <div className="pl-8 pr-8 flex min-h-screen bg-gray-100">
       <Head>
         <title>DEV Community</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      {/* <aside className="w-64 bg-white p-4">
-        <nav>
-          <ul>
-            {sidebarItems.map((item, index) => (
-              <li key={index} className="mb-2">
-                <Link href="#" className="flex items-center text-gray-700 hover:text-black">
-                  <span className="mr-2">{item.icon}</span>
-                  <span>{item.text}</span>
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </nav>
-      </aside> */}
-
-      <div className="flex-1 p-8">
-        <header className="flex justify-between items-center mb-8">
-          <Image src="/dev-logo.png" alt="DEV" width={50} height={40} />
-          <div className="relative">
-            <input
-              type="text"
-              placeholder="Search..."
-              className="py-2 px-4 pr-10 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
-            <span className="absolute right-3 top-2 text-gray-400">🔍</span>
-          </div>
-          <div>
-            <button className="text-blue-600 mr-4">Log in</button>
-            <button className="bg-blue-600 text-white py-2 px-4 rounded">Create account</button>
-          </div>
-        </header>
+      <div className="flex-1">
+        <SearchBar />
 
         <div className="flex flex-1">
           <aside className="w-64 p-2 bg-gray-100">
