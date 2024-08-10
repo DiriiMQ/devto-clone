@@ -1,10 +1,14 @@
 'use client'
 
-import Link from "next/link";
-import Head from 'next/head'
-import Image from 'next/image'
+import Head from 'next/head';
+import Image from 'next/image';
 
 import SearchBar from "./_components/searchBar";
+import "./style/default.css";
+import RightBar from "./_components/home/rightBar";
+import BlogCard from './_components/home/blogCard';
+import WeeklyChallenges from './_components/home/weeklyChallenges';
+import { sampleChallenges } from './_components/home/sampleChallenges';
 
 export default function Home() {
   const sidebarItems = [
@@ -25,7 +29,20 @@ export default function Home() {
 
   const posts = [
     {
+      id: '1',
       author: 'Arindam Majumder',
+      authorAvatar: '/avatar-1.jpg',
+      date: 'Aug 5',
+      title: '8 Developer Tools You Should Try in 2024',
+      tags: ['webdev', 'react', 'beginners', 'programming'],
+      reactions: 101,
+      comments: 22,
+      readTime: '9 min read'
+    },
+    {
+      id: '2',
+      author: 'Arindam Majumder',
+      authorAvatar: '/avatar-1.jpg',
       date: 'Aug 5',
       title: '8 Developer Tools You Should Try in 2024',
       tags: ['webdev', 'react', 'beginners', 'programming'],
@@ -36,78 +53,37 @@ export default function Home() {
   ] // for sample
 
   return (
-    <div className="pl-8 pr-8 flex min-h-screen bg-gray-100">
+    <div className="min-h-screen bg-gray-100">
       <Head>
         <title>DEV Community</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div className="flex-1">
+      <div>
         <SearchBar />
 
-        <div className="flex flex-1">
-          <aside className="w-64 p-2 bg-gray-100">
-            <nav>
-              <ul>
-                {sidebarItems.map((item, index) => (
-                  <li key={index} className="mb-2">
-                    <Link href="#" className="flex items-center text-gray-700 hover:text-black">
-                      <span className="mr-2">{item.icon}</span>
-                      <span>{item.text}</span>
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </nav>
-          </aside>
+        <div className="container flex flex-1 mt-6">
+          <RightBar />
 
-          <main className="flex-1 p-8">
+          <main className="flex-1">
             <div className="flex">
             <div className="w-3/4 pr-8">
-              <nav className="mb-4">
-                <ul className="flex space-x-4">
-                  <li><a href="#" className="text-blue-600 font-bold">Relevant</a></li>
+              <nav className="mb-4 ml-2">
+                <ul className="flex space-x-4 text-gl">
+                  <li><a href="#" className="text-black font-bold">Relevant</a></li>
                   <li><a href="#" className="text-gray-600">Latest</a></li>
                   <li><a href="#" className="text-gray-600">Top</a></li>
                 </ul>
               </nav>
 
               {posts.map((post, index) => (
-                <article key={index} className="bg-white p-6 mb-4 rounded shadow">
-                  <div className="flex items-center mb-2">
-                    <Image src={`/avatar-${index + 1}.jpg`} alt={post.author} width={40} height={40} className="rounded-full mr-2" />
-                    <div>
-                      <h3 className="font-bold">{post.author}</h3>
-                      <p className="text-sm text-gray-500">{post.date}</p>
-                    </div>
-                  </div>
-                  <h2 className="text-2xl font-bold mb-2">{post.title}</h2>
-                  <div className="mb-4">
-                    {post.tags.map((tag, tagIndex) => (
-                      <span key={tagIndex} className="mr-2 text-gray-600">#{tag}</span>
-                    ))}
-                  </div>
-                  <div className="flex justify-between text-sm text-gray-500">
-                    <span>❤️ {post.reactions} reactions</span>
-                    <span>💬 {post.comments} comments</span>
-                    <span>{post.readTime}</span>
-                  </div>
-                </article>
+                <BlogCard post={post} />
               ))}
             </div>
 
-            <div className="w-1/4">
-              <div className="bg-white p-4 rounded shadow mb-4">
-                <h3 className="font-bold mb-2">📅 What's happening this week</h3>
-
-                <h4 className="font-bold">Challenges 🤓</h4>
-                <div className="border border-gray-200 p-2 rounded mt-2">
-                  <p className="text-sm">Running until August 18</p>
-                  <a href="#" className="text-blue-600 text-sm">Build Better on Stellar: Smart Contract Challenge</a>
-                  <p className="text-sm font-bold">50k in prizes!</p>
-                </div>
-
-                <p className="mt-2">Have a great week ❤️</p>
+            <div className="w-1/3">
+              <div className="container mx-auto mb-4">
+                <WeeklyChallenges challenges={sampleChallenges} />
               </div>
 
               <div className="bg-white p-4 rounded shadow">

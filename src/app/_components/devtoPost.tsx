@@ -56,7 +56,7 @@ const DevToPost: React.FC<DevToPostProps> = ({ post, author, comments, relatedPo
   ];
 
   return (
-    <div className="w-full mx-auto p-4 font-sans">
+    <div className="container w-full mx-auto p-4 font-sans">
       <div className="flex">
         {/* Left sidebar */}
         <div className="flex flex-col items-center mr-5 space-y-1">

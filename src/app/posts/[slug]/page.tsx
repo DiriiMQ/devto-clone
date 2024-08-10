@@ -7,6 +7,8 @@ import DevToPost, { DevToPostProps } from '~/app/_components/devtoPost';
 import { sampleDevToData } from '~/app/_components/sampleDevToData';
 import SearchBar from '~/app/_components/searchBar';
 
+import "../../style/default.css";
+
 export default function Page({ params }: { params: { slug: string } }) {
   useEffect(() => {
     if (params.slug) {
@@ -14,15 +16,20 @@ export default function Page({ params }: { params: { slug: string } }) {
     }
   }, [params.slug]);
 
+  const onSearch = (query: string) => {
+    console.log('Search query:', query);
+    // Add your search logic here
+  };
+
   return( 
-    <div className="pl-8 pr-8 flex min-h-screen bg-gray-100">
+    <div className="min-h-screen bg-gray-100">
       <Head>
         <title>DEV Community</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div className="flex-1">
-        <SearchBar />
+      <div>
+        <SearchBar onSearch={ onSearch } />
 
         <DevToPost {...sampleDevToData} />
       </div>
