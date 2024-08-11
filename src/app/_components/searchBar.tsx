@@ -15,7 +15,7 @@ const SearchBar: React.FC<HeaderProps> = ({ onSearch }) => {
     };
 
     return (
-      <div className="bg-white border-b pt-1 pb-2">
+      <div className="bg-white border-b pt-1 pb-2 fixed top-0 left-0 w-full z-50">
         <header className="container flex flex-auto justify-between items-center">
           <div className="flex space-x-3">
             <Image src="/dev-logo.png" alt="DEV" width={50} height={40} />

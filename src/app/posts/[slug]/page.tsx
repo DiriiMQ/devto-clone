@@ -97,8 +97,10 @@ export default function Page({ params }: { params: { slug: string } }) {
       <div>
         <SearchBar onSearch={ onSearch } />
 
-        {/* <DevToPost {...sampleDevToData} /> */}
-        <PostWithProfile post={postData} profile={profileData} />
+        <div className="container mainContent">
+          {/* <DevToPost {...sampleDevToData} /> */}
+          <PostWithProfile post={postData} profile={profileData} />
+        </div>
       </div>
     </div>
   );

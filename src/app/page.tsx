@@ -67,7 +67,7 @@ export default function Home() {
       <div>
         <SearchBar onSearch={ onSearch } />
 
-        <div className="container flex flex-1 mt-6">
+        <div className="container mainContent flex flex-1 mt-6">
           <RightBar />
 
           <main className="flex-1">

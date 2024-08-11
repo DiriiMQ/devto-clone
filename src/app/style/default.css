@@ -3,4 +3,10 @@
     margin-left: auto;
     margin-right: auto;
     max-width: 85rem; /* This is equivalent to max-w-8xl in Tailwind CSS */
+    /* padding-top: 1rem; */
+  }
+
+  /* set mainContent className="pt-4" */
+  .mainContent {
+    padding-top: 4rem;
   }
