@@ -1,5 +1,6 @@
 import { Search } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
 
 interface HeaderProps {
@@ -18,7 +19,9 @@ const SearchBar: React.FC<HeaderProps> = ({ onSearch }) => {
       <div className="bg-white border-b pt-1 pb-2 fixed top-0 left-0 w-full z-50">
         <header className="container flex flex-auto justify-between items-center">
           <div className="flex space-x-3">
-            <Image src="/dev-logo.png" alt="DEV" width={50} height={40} />
+            <Link href="/">
+              <Image src="/dev-logo.png" alt="DEV" width={50} height={40} />
+            </Link>
             {/* Search Bar */}
             <form onSubmit={handleSubmit} className="relative">
               <input

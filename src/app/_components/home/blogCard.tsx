@@ -20,7 +20,7 @@ const BlogCard: React.FC<{ post: Post }> = ({ post }) => {
 
         <div className="flex items-center mb-2">
           <img 
-            src={post.authorAvatar || "/api/placeholder/40/40"}
+            src={post.authorAvatar ?? "/api/placeholder/40/40"}
             alt={`${post.author} Avatar`}
             className="w-10 h-10 rounded-full mr-3"
           />
