@@ -37,7 +37,7 @@ export default function Home() {
       tags: ['webdev', 'react', 'beginners', 'programming'],
       reactions: 101,
       comments: 22,
-      readTime: '9 min read'
+      readTime: '9 min'
     },
     {
       id: '2',
@@ -48,9 +48,14 @@ export default function Home() {
       tags: ['webdev', 'react', 'beginners', 'programming'],
       reactions: 101,
       comments: 22,
-      readTime: '9 min read'
+      readTime: '9 min'
     }
   ] // for sample
+
+  const onSearch = (query: string) => {
+    console.log('Search query:', query);
+    // Add your search logic here
+  }
 
   return (
     <div className="min-h-screen bg-gray-100">
@@ -60,7 +65,7 @@ export default function Home() {
       </Head>
 
       <div>
-        <SearchBar />
+        <SearchBar onSearch={ onSearch } />
 
         <div className="container flex flex-1 mt-6">
           <RightBar />
@@ -77,7 +82,9 @@ export default function Home() {
               </nav>
 
               {posts.map((post, index) => (
-                <BlogCard post={post} />
+                <div key={index}>
+                  <BlogCard post={post} />
+                </div>
               ))}
             </div>
 
