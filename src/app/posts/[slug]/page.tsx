@@ -9,6 +9,7 @@ import SearchBar from '~/app/_components/searchBar';
 
 import "../../style/default.css";
 import PostWithProfile from '~/app/_components/posts/postWithProfile';
+import { SessionProvider } from 'next-auth/react';
 
 export default function Page({ params }: { params: { slug: string } }) {
   useEffect(() => {
@@ -88,21 +89,23 @@ export default function Page({ params }: { params: { slug: string } }) {
   };
 
   return( 
-    <div className="min-h-screen bg-gray-100">
-      <Head>
-        <title>DEV Community</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+    <SessionProvider>
+      <div className="min-h-screen bg-gray-100">
+        <Head>
+          <title>DEV Community</title>
+          <link rel="icon" href="/favicon.ico" />
+        </Head>
 
-      <div>
-        <SearchBar onSearch={ onSearch } />
+        <div>
+          <SearchBar onSearch={ onSearch } />
 
-        <div className="container mainContent">
-          {/* <DevToPost {...sampleDevToData} /> */}
-          <PostWithProfile post={postData} profile={profileData} />
+          <div className="container mainContent">
+            {/* <DevToPost {...sampleDevToData} /> */}
+            <PostWithProfile post={postData} profile={profileData} />
+          </div>
         </div>
       </div>
-    </div>
+    </SessionProvider>
   );
 };
 

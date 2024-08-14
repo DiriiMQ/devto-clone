@@ -9,6 +9,7 @@ import RightBar from "./_components/home/rightBar";
 import BlogCard from './_components/home/blogCard';
 import WeeklyChallenges from './_components/home/weeklyChallenges';
 import { sampleChallenges } from './_components/home/sampleChallenges';
+import { SessionProvider } from 'next-auth/react';
 
 export default function Home() {
   const sidebarItems = [
@@ -58,55 +59,57 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-100">
-      <Head>
-        <title>DEV Community</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+    <SessionProvider>
+      <div className="min-h-screen bg-gray-100">
+        <Head>
+          <title>DEV Community</title>
+          <link rel="icon" href="/favicon.ico" />
+        </Head>
 
-      <div>
-        <SearchBar onSearch={ onSearch } />
+        <div>
+          <SearchBar onSearch={ onSearch } />
 
-        <div className="container mainContent flex flex-1 mt-6">
-          <RightBar />
+          <div className="container mainContent flex flex-1 mt-6">
+            <RightBar />
 
-          <main className="flex-1">
-            <div className="flex">
-            <div className="w-3/4 pr-8">
-              <nav className="mb-4 ml-2">
-                <ul className="flex space-x-4 text-gl">
-                  <li><a href="#" className="text-black font-bold">Relevant</a></li>
-                  <li><a href="#" className="text-gray-600">Latest</a></li>
-                  <li><a href="#" className="text-gray-600">Top</a></li>
-                </ul>
-              </nav>
+            <main className="flex-1">
+              <div className="flex">
+              <div className="w-3/4 pr-8">
+                <nav className="mb-4 ml-2">
+                  <ul className="flex space-x-4 text-gl">
+                    <li><a href="#" className="text-black font-bold">Relevant</a></li>
+                    <li><a href="#" className="text-gray-600">Latest</a></li>
+                    <li><a href="#" className="text-gray-600">Top</a></li>
+                  </ul>
+                </nav>
 
-              {posts.map((post, index) => (
-                <div key={index}>
-                  <BlogCard post={post} />
+                {posts.map((post, index) => (
+                  <div key={index}>
+                    <BlogCard post={post} />
+                  </div>
+                ))}
+              </div>
+
+              <div className="w-1/3">
+                <div className="container mx-auto mb-4">
+                  <WeeklyChallenges challenges={sampleChallenges} />
                 </div>
-              ))}
-            </div>
 
-            <div className="w-1/3">
-              <div className="container mx-auto mb-4">
-                <WeeklyChallenges challenges={sampleChallenges} />
-              </div>
-
-              <div className="bg-white p-4 rounded shadow">
-                <h3 className="font-bold mb-2">#discuss</h3>
-                <ul className="space-y-2">
-                  <li>
-                    <a href="#" className="text-sm">I'm developing a minimalistic note-taking web app with custom widgets. Can you suggest any widgets you would like to see?</a>
-                    <p className="text-xs text-gray-500">6 comments</p>
-                  </li>
-                </ul>
+                <div className="bg-white p-4 rounded shadow">
+                  <h3 className="font-bold mb-2">#discuss</h3>
+                  <ul className="space-y-2">
+                    <li>
+                      <a href="#" className="text-sm">I'm developing a minimalistic note-taking web app with custom widgets. Can you suggest any widgets you would like to see?</a>
+                      <p className="text-xs text-gray-500">6 comments</p>
+                    </li>
+                  </ul>
+                </div>
               </div>
             </div>
+            </main>
           </div>
-          </main>
         </div>
       </div>
-    </div>
+    </SessionProvider>
   )
 }
