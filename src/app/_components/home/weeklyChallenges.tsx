@@ -14,7 +14,7 @@ interface WeeklyChallengesProps {
 
 const WeeklyChallenges: React.FC<WeeklyChallengesProps> = ({ challenges }) => {
   return (
-    <div className="bg-white rounded-lg shadow-md p-4 max-w-md">
+    <div className="bg-white rounded-lg border p-4 max-w-md">
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-sm font-light flex items-center">
           <span className="mr-2">👋</span>

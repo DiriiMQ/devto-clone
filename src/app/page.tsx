@@ -69,7 +69,7 @@ export default function Home() {
         <div>
           <SearchBar onSearch={ onSearch } />
 
-          <div className="container mainContent flex flex-1 mt-6">
+          <div className="container mainContent flex flex-1 mt-2">
             <RightBar />
 
             <main className="flex-1">
@@ -95,8 +95,10 @@ export default function Home() {
                   <WeeklyChallenges challenges={sampleChallenges} />
                 </div>
 
-                <div className="bg-white p-4 rounded shadow">
-                  <h3 className="font-bold mb-2">#discuss</h3>
+                <div className="bg-white p-4 border rounded">
+                  <h3 className="font-bold">#discuss</h3>
+                  <p className="font-light text-xs mb-2">Discussion threads targeting the whole community</p>
+                  <div className="border-b mb-4"></div>
                   <ul className="space-y-2">
                     <li>
                       <a href="#" className="text-sm">I'm developing a minimalistic note-taking web app with custom widgets. Can you suggest any widgets you would like to see?</a>

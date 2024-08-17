@@ -100,7 +100,7 @@ const PostWithProfile: React.FC<PostWithProfileProps> = ({ post, profile }) => {
 
       {/* Right Sidebar - Profile */}
       <div className="w-full lg:w-[450px]">
-        <div className="bg-white rounded-lg shadow-md mb-4">
+        <div className="bg-white rounded-lg mb-4">
           {/* <div className="flex items-center space-x-4 mb-4">
             <Image src={profile.avatar} alt={profile.name} width={60} height={60} className="rounded-full" />
             <div>
@@ -151,7 +151,7 @@ const PostWithProfile: React.FC<PostWithProfileProps> = ({ post, profile }) => {
         </div>
         
         {/* "More from..." section as a separate block */}
-        <div className="bg-white rounded-lg shadow-md p-4">
+        <div className="bg-white rounded-lg p-4">
           <h3 className="border-b pb-2 font-semibold text-lg mb-3">More from {profile.name}</h3>
           <ul className="space-y-3">
             {profile.recentPosts.map((recentPost, index) => (

@@ -18,12 +18,12 @@ export default function RightBar() {
       ]
     
     return (
-        <aside className="w-64 p-2 bg-gray-100">
+        <aside className="w-64 pl-4 bg-gray-100">
             <nav>
                 <ul>
                 {sidebarItems.map((item, index) => (
                     <li key={index} className="mb-4">
-                    <Link href="#" className="flex items-center text-gray-700 hover:text-black">
+                    <Link href="#" className="flex items-center text-gray-800 hover:text-black">
                         <span className="mr-2">{item.icon}</span>
                         <span>{item.text}</span>
                     </Link>

@@ -15,18 +15,18 @@ interface Post {
   
 const BlogCard: React.FC<{ post: Post }> = ({ post }) => {
   return (
-    <div className="max-w mx-auto bg-white rounded-lg shadow-md overflow-hidden mb-4">
-      <div className="p-4">
+    <div className="max-w mx-auto bg-white border rounded-lg overflow-hidden mb-4">
+      <div className="p-3">
 
-        <div className="flex items-center mb-2">
+        <div className="flex items-center mb-0">
           <img 
             src={post.authorAvatar ?? "/api/placeholder/40/40"}
             alt={`${post.author} Avatar`}
             className="w-10 h-10 rounded-full mr-3"
           />
           <div>
-            <h3 className="font-semibold text-gray-800">{post.author}</h3>
-            <p className="text-sm text-gray-600">{post.date}</p>
+            <h3 className="text-sm text-gray-700">{post.author}</h3>
+            <p className="text-xs text-gray-600">{post.date}</p>
           </div>
         </div>
 
@@ -43,7 +43,7 @@ const BlogCard: React.FC<{ post: Post }> = ({ post }) => {
               ))}
             </div>
 
-            <div className="flex items-center justify-between text-sm text-gray-600">
+            <div className="flex items-center justify-between text-xs text-gray-600">
                 <div className="flex items-center space-x-2">
                     <Heart size={16} className="text-red-500 fill-current" />
                     <span>{post.reactions} reactions</span>
