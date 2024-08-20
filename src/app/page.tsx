@@ -15,7 +15,7 @@ import { sampleChallenges } from './_components/home/sampleChallenges';
 
 const HomeContent = () => {
   const { data: session } = useSession();
-  const [posts, setPosts] = useState([]);
+  const [posts, setPosts] = useState<any[]>([]);
 
   const sidebarItems = [
     { icon: '🏠', text: 'Home' },
