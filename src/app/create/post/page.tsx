@@ -2,6 +2,10 @@
 
 import React, { useState } from 'react';
 import { Editor } from '@tinymce/tinymce-react';
+import Link from 'next/link';
+import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+import { trpc } from '~/utils/trpc';
 
 interface Tag {
   id: string;
@@ -13,6 +17,9 @@ const PostEditor: React.FC = () => {
   const [content, setContent] = useState<string>('');
   const [tags, setTags] = useState<Tag[]>([]);
   const [coverImage, setCoverImage] = useState<File | null>(null);
+
+  const createPostMutation = trpc.post.create.useMutation();
+  const router = useRouter();
 
   const handleEditorChange = (content: string, editor: any) => {
     setContent(content);
@@ -30,21 +37,45 @@ const PostEditor: React.FC = () => {
     }
   };
 
-  const handlePublish = () => {
-    console.log('Publishing:', { title, content, tags, coverImage });
+  const handlePublish = async () => {
+    try {
+      await createPostMutation.mutateAsync({
+        title,
+        content,
+        draft: false,
+      });
+      console.log('Post published successfully');
+      router.push('/');
+    } catch (error) {
+      console.error('Failed to publish post', error);
+    }
   };
 
-  const handleSaveDraft = () => {
-    console.log('Saving draft:', { title, content, tags, coverImage });
+  const handleSaveDraft = async () => {
+    try {
+      await createPostMutation.mutateAsync({
+        title,
+        content,
+        draft: true,
+      });
+      console.log('Draft saved successfully');
+    } catch (error) {
+      console.error('Failed to save draft', error);
+    }
   };
 
   return (
     <div className="max-w-4xl mx-auto p-6 bg-white shadow-lg rounded-lg">
-      <div className="flex justify-between items-center mb-4">
-        <h1 className="text-2xl font-bold">Create Post</h1>
+      <div className="flex justify-between items-center mb-10">
+        <div className='flex items-center space-x-2'>
+          <Link href="/">
+            <Image src="/dev-logo.png" alt="DEV" width={50} height={40} />
+          </Link>
+          <h1 className="text-2xl font-bold">Create Post</h1>
+        </div>
         <div className="flex space-x-2">
-          <button className="px-4 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300">Edit</button>
-          <button className="px-4 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300">Preview</button>
+          <button className="px-4 py-2 text-gray-700 rounded hover:bg-blue-50 hover:text-blue-800">Edit</button>
+          <button className="px-4 py-2 text-gray-700 rounded hover:bg-blue-50 hover:text-blue-800">Preview</button>
         </div>
       </div>
       
@@ -70,7 +101,7 @@ const PostEditor: React.FC = () => {
         placeholder="New post title here..." 
         value={title}
         onChange={(e) => setTitle(e.target.value)}
-        className="w-full text-5xl font-bold mb-4 p-2 border-b border-gray-300 focus:outline-none focus:border-blue-500"
+        className="w-full text-5xl font-bold mb-3 p-2 border-gray-300 focus:outline-none focus:border-blue-500"
       />
       
       <input 
@@ -78,7 +109,7 @@ const PostEditor: React.FC = () => {
         placeholder="Add up to 4 tags..." 
         value={tags.map(tag => tag.name).join(', ')}
         onChange={handleTagChange}
-        className="w-full mb-4 p-2 border-b border-gray-300 focus:outline-none focus:border-blue-500"
+        className="w-full mb-4 p-2 border-gray-300 focus:outline-none focus:border-blue-500"
       />
       
       <Editor
@@ -111,15 +142,6 @@ const PostEditor: React.FC = () => {
         >
           Save draft
         </button>
-      </div>
-      
-      <div className="mt-8 bg-gray-100 p-4 rounded">
-        <h3 className="font-bold mb-2">Tagging Guidelines</h3>
-        <ul className="list-disc list-inside text-sm text-gray-700">
-          <li>Tags help people find your post - think of them as the topics or categories that best describe your post.</li>
-          <li>Add up to four comma-separated tags per post. Use existing tags whenever possible.</li>
-          <li>Some tags have special posting guidelines - double check to make sure your post complies with them.</li>
-        </ul>
       </div>
     </div>
   );

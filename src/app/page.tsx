@@ -1,7 +1,10 @@
 'use client'
 
+import React, { useEffect, useState } from 'react';
 import Head from 'next/head';
 import Image from 'next/image';
+import { trpc } from '~/utils/trpc';
+import { useSession, SessionProvider } from 'next-auth/react';
 
 import SearchBar from "./_components/searchBar";
 import "./style/default.css";
@@ -9,9 +12,11 @@ import RightBar from "./_components/home/rightBar";
 import BlogCard from './_components/home/blogCard';
 import WeeklyChallenges from './_components/home/weeklyChallenges';
 import { sampleChallenges } from './_components/home/sampleChallenges';
-import { SessionProvider } from 'next-auth/react';
 
-export default function Home() {
+const HomeContent = () => {
+  const { data: session } = useSession();
+  const [posts, setPosts] = useState([]);
+
   const sidebarItems = [
     { icon: '🏠', text: 'Home' },
     { icon: '🎙️', text: 'Podcasts' },
@@ -26,54 +31,41 @@ export default function Home() {
     { icon: '📞', text: 'Contact' },
     { icon: '📚', text: 'Guides' },
     { icon: '🔄', text: 'Software comparisons' },
-  ]
+  ];
 
-  const posts = [
-    {
-      id: '1',
-      author: 'Arindam Majumder',
-      authorAvatar: '/avatar-1.jpg',
-      date: 'Aug 5',
-      title: '8 Developer Tools You Should Try in 2024',
-      tags: ['webdev', 'react', 'beginners', 'programming'],
-      reactions: 101,
-      comments: 22,
-      readTime: '9 min'
-    },
-    {
-      id: '2',
-      author: 'Arindam Majumder',
-      authorAvatar: '/avatar-1.jpg',
-      date: 'Aug 5',
-      title: '8 Developer Tools You Should Try in 2024',
-      tags: ['webdev', 'react', 'beginners', 'programming'],
-      reactions: 101,
-      comments: 22,
-      readTime: '9 min'
+  const { data: postsData, error } = session
+    ? trpc.post.getAllPosts.useQuery()
+    : trpc.post.getAllPostsPublic.useQuery();
+
+  useEffect(() => {
+    if (postsData) {
+      setPosts(postsData);
     }
-  ] // for sample
+    if (error) {
+      console.error('Error fetching posts:', error);
+    }
+  }, [postsData, error]);
 
   const onSearch = (query: string) => {
     console.log('Search query:', query);
     // Add your search logic here
-  }
+  };
 
   return (
-    <SessionProvider>
-      <div className="min-h-screen bg-gray-100">
-        <Head>
-          <title>DEV Community</title>
-          <link rel="icon" href="/favicon.ico" />
-        </Head>
+    <div className="min-h-screen bg-gray-100">
+      <Head>
+        <title>DEV Community</title>
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
 
-        <div>
-          <SearchBar onSearch={ onSearch } />
+      <div>
+        <SearchBar onSearch={onSearch} />
 
-          <div className="container mainContent flex flex-1 mt-2">
-            <RightBar />
+        <div className="container mainContent flex flex-1 mt-2">
+          <RightBar />
 
-            <main className="flex-1">
-              <div className="flex">
+          <main className="flex-1">
+            <div className="flex">
               <div className="w-3/4 pr-8">
                 <nav className="mb-4 ml-2">
                   <ul className="flex space-x-4 text-gl">
@@ -108,10 +100,17 @@ export default function Home() {
                 </div>
               </div>
             </div>
-            </main>
-          </div>
+          </main>
         </div>
       </div>
+    </div>
+  );
+};
+
+export default function Home() {
+  return (
+    <SessionProvider>
+      <HomeContent />
     </SessionProvider>
-  )
+  );
 }

@@ -46,7 +46,7 @@ const SearchBar: React.FC<HeaderProps> = ({ onSearch }) => {
         <div className="relative">
           {session ? (
             <div className="flex items-center space-x-3">
-              <Link href="/create-post">
+              <Link href="/create/post">
                 <button className="border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white font-light py-1 px-2 rounded-md transition-all">
                   Create Post
                 </button>

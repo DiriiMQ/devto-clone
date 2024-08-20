@@ -1,0 +1,135 @@
+'use client';
+
+import Head from 'next/head';
+import Image from 'next/image';
+import { useEffect, useState } from 'react';
+import DevToPost, { DevToPostProps } from '~/app/_components/devtoPost';
+import SearchBar from '~/app/_components/searchBar';
+import "../../style/default.css";
+import PostWithProfile from '~/app/_components/posts/postWithProfile';
+import { SessionProvider } from 'next-auth/react';
+import { trpc } from '~/utils/trpc';
+
+interface User {
+  id: string;
+  name?: string;
+  email?: string;
+  image?: string;
+}
+
+interface Author {
+  id: string;
+  name: string;
+  avatar: string;
+}
+
+interface Comment {
+  id: number;
+  content: string;
+  createdAt: string;
+  updatedAt: string;
+  author: User;
+}
+
+interface Reaction {
+  id: number;
+  content: string;
+  createdAt: string;
+  updatedAt: string;
+  author: User;
+}
+
+
+interface Post {
+  id: number;
+  title: string;
+  content: string;
+  createdAt: string;
+  updatedAt: string;
+  createdById: string;
+  draft: boolean;
+  comments: Comment[];
+  date: string;
+  tags: string[];
+  reactions: Reaction[];
+  readTime: string;
+}
+
+interface Profile {
+  name: string;
+  avatar: string;
+  bio: string;
+  location: string;
+  education: string;
+  pronouns: string;
+  work: string;
+  joined: string;
+  recentPosts: {
+    title: string;
+    tags: string[];
+  }[];
+}
+
+export default function Page({ params }: { params: { slug: string } }) {
+  const [postData, setPostData] = useState<Post | null>(null);
+  const [profileData, setProfileData] = useState<Profile | null>(null);
+
+  const postQuery = trpc.post.getPost.useQuery({ id: parseInt(params.slug) });
+
+  useEffect(() => {
+    if (postQuery.data) {
+      setPostData(postQuery.data);
+      // Assuming profile data is part of the post data or fetched separately
+      setProfileData({
+        name: postQuery.data.createdBy.name,
+        avatar: postQuery.data.createdBy.avatar,
+        bio: "Full Stack SDE • Open-Source Contributor • Collaborator @Oppia • Open for Collaborations 🤝",
+        location: "Kathmandu, Nepal",
+        education: "BTech in Computer Science",
+        pronouns: "he/him",
+        work: "Software Engineer",
+        joined: "Jul 26, 2023",
+        recentPosts: [
+          {
+            title: "Do this first if you are using an Auth Provider",
+            tags: ["webdev", "javascript", "opensource", "programming"],
+          },
+          {
+            title: "4 core developer tools I use in my daily life 🚀",
+            tags: ["productivity", "devops", "opensource", "programming"],
+          },
+          {
+            title: "Hey Chads, share your Neovim and Tmux Config",
+            tags: ["discuss", "programming", "vim", "productivity"],
+          },
+        ],
+      });
+    }
+  }, [postQuery.data]);
+
+  const onSearch = (query: string) => {
+    console.log('Search query:', query);
+    // Add your search logic here
+  };
+
+  return (
+    <SessionProvider>
+      <div className="min-h-screen bg-gray-100">
+        <Head>
+          <title>DEV Community</title>
+          <link rel="icon" href="/favicon.ico" />
+        </Head>
+
+        <div>
+          <SearchBar onSearch={onSearch} />
+
+          <div className="container mainContent">
+            {postData && profileData && (
+              <PostWithProfile post={postData} profile={profileData} />
+            )}
+          </div>
+        </div>
+      </div>
+    </SessionProvider>
+  );
+}

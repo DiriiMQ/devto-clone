@@ -36,8 +36,8 @@ export default function Page({ params }: { params: { slug: string } }) {
       tags: ["python", "productivity", "programming", "tutorial"],
     },
     reactions: {
-      likes: 14,
-      comments: 12,
+      likes: 0,
+      comments: 2,
       bookmarks: 12,
     },
     postedOn: "Aug 10",
